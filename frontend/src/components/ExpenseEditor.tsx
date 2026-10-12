@@ -5,7 +5,7 @@ import { getSession, updateSession, deleteSession, Session } from '../lib/api';
 import { allocate } from '../lib/calc';
 import { CATEGORIES, METHODS, SplitData, SplitMethod, categoryOf, convertSplit, splitExpense } from '../lib/expenses';
 import { fmt, labelMap, memberTones } from '../lib/people';
-import { Avatar, Button, Card, ChangesBar, DraftBar, Icon, SplitByTabs, cellCls, rowLabelCls, selectPillCls } from './ui';
+import { Button, Card, ChangesBar, DraftBar, Icon, SplitByTabs, cellCls, rowLabelCls, selectPillCls } from './ui';
 import { toast } from './Toast';
 import ReceiptPhotos from './ReceiptPhotos';
 import ConfirmDialog from './ConfirmDialog';
@@ -223,7 +223,6 @@ export default function ExpenseEditor({ sessionId, narrow, onBack, onSaved, onDi
     const payer = members.find(m => m.user_id === paidBy);
     const payerLabel = payer ? labels[payer.user_id] : 'someone';
     const display = (id: string, n: string) => labels[id] ?? n;
-    const maxShare = Math.max(...Object.values(split.shares), 0.01);
     const hint = METHODS.find(m => m.value === method)?.hint;
 
     // Paid by / date / category / delete: the first card, above the cost.
@@ -339,26 +338,6 @@ export default function ExpenseEditor({ sessionId, narrow, onBack, onSaved, onDi
                 </div>
 
                 <div className="flex-[1_1_300px] min-w-0 flex flex-col gap-3.5 min-[760px]:sticky min-[760px]:top-6">
-                    <Card className="p-5 flex flex-col gap-4">
-                        <span className="text-lg font-black">Who pays what</span>
-                        {members.filter(m => active.includes(m.user_id)).map(m => {
-                            const amt = split.shares[m.user_id] ?? 0;
-                            const t = tones[m.user_id];
-                            return (
-                                <div key={m.user_id} className="flex items-center gap-3">
-                                    <Avatar name={m.name} tone={t} size={36} />
-                                    <span className="flex-1 flex flex-col gap-[5px]">
-                                        <span className="flex justify-between"><span className="text-[15px] font-extrabold">{display(m.user_id, m.name)}</span><AnimatedNumber value={amt} prefix="$" className="text-[15.5px] font-black" /></span>
-                                        <span className="h-1.5 rounded-[3px] bg-soft"><motion.span className="block h-full rounded-[3px] opacity-50" style={{ background: t.fg }} initial={false} animate={{ width: `${(amt / maxShare) * 100}%` }} transition={{ duration: 0.25 }} /></span>
-                                    </span>
-                                </div>
-                            );
-                        })}
-                        {active.length === 0 && <span className="text-sm font-bold text-faint">Choose who shares this cost.</span>}
-                        <div className="border-t border-rule pt-3.5 flex justify-between text-[17px] font-black"><span>Total</span><AnimatedNumber value={total} prefix="$" /></div>
-                        <p className="m-0 text-[13px] font-semibold leading-[1.5] text-faint">Pennies always add up: any leftover cent goes to one person rather than disappearing.</p>
-                    </Card>
-
                     {record && <Card className="p-5"><ReceiptPhotos sessionId={sessionId} groupId={record.group_id} /></Card>}
 
                     <div className="border-[1.5px] border-dashed border-line rounded-[24px] py-4 px-[18px] flex flex-col gap-2.5">
