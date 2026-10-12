@@ -350,7 +350,6 @@ export default function ExpenseEditor({ sessionId, narrow, onBack, onSaved, onDi
                                     <span className="flex-1 flex flex-col gap-[5px]">
                                         <span className="flex justify-between"><span className="text-[15px] font-extrabold">{display(m.user_id, m.name)}</span><AnimatedNumber value={amt} prefix="$" className="text-[15.5px] font-black" /></span>
                                         <span className="h-1.5 rounded-[3px] bg-soft"><motion.span className="block h-full rounded-[3px] opacity-50" style={{ background: t.fg }} initial={false} animate={{ width: `${(amt / maxShare) * 100}%` }} transition={{ duration: 0.25 }} /></span>
-                                        <span className="text-[12.5px] font-bold text-faint">{m.user_id === paidBy ? 'paid the bill' : `owes ${payerLabel}`}</span>
                                     </span>
                                 </div>
                             );
