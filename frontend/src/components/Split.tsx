@@ -105,7 +105,6 @@ export default function Split({ sessionId, narrow, onBack, onImport, onSaved, on
     const subtotal = items.reduce((a, i) => a + i.price, 0);
     const total = Math.round((subtotal + num(tax) + num(tip)) * 100) / 100;
     const assignedCount = items.filter(i => i.assigned_users.some(u => ids.includes(u))).length;
-    const memberById = (id: string) => members.find(m => m.user_id === id);
     const payer = members.find(m => m.user_id === paidBy);
     const labels = useMemo(() => labelMap(members), [members]);
     const payerLabel = payer ? labels[payer.user_id] : 'someone';
@@ -244,7 +243,6 @@ export default function Split({ sessionId, narrow, onBack, onImport, onSaved, on
     if (!record || !group) return <p className="text-center text-faint py-16 animate-pulse">Loading receipt…</p>;
     if (importing) return <ReceiptUpload groupId={record.group_id} sessionId={sessionId} narrow={narrow} onImported={() => setImporting(false)} onParsed={applyImport} onBack={() => setImporting(false)} />;
 
-    const maxShare = Math.max(...split.totals.map(([, v]) => v), 0.01);
     const paintTone = paint ? tones[paint] : null;
 
     return (
@@ -382,23 +380,7 @@ export default function Split({ sessionId, narrow, onBack, onImport, onSaved, on
 
                 <div className="flex-[1_1_300px] min-w-0 flex flex-col gap-3.5 min-[760px]:sticky min-[760px]:top-6">
                     <Card className="p-5 flex flex-col gap-4">
-                        <span className="text-lg font-black">Who pays what</span>
-                        {[...split.totals].sort((a, b) => display(a[0]).localeCompare(display(b[0]))).map(([n, amt]) => {
-                            const m = memberById(n);
-                            const t = m ? tones[m.user_id] : null;
-                            if (!m || !t) return null;
-                            return (
-                                <div key={m.user_id} className="flex items-center gap-3">
-                                    <Avatar name={m.name} tone={t} size={36} />
-                                    <span className="flex-1 flex flex-col gap-[5px]">
-                                        <span className="flex justify-between"><span className="text-[15px] font-extrabold">{display(n)}</span><AnimatedNumber value={amt} prefix="$" className="text-[15.5px] font-black" /></span>
-                                        <span className="h-1.5 rounded-[3px] bg-soft"><motion.span className="block h-full rounded-[3px] opacity-50" style={{ background: t.fg }} initial={false} animate={{ width: `${(amt / maxShare) * 100}%` }} transition={{ duration: 0.25 }} /></span>
-                                        <span className="text-[12.5px] font-bold text-faint">{m.user_id === paidBy ? 'paid the bill' : `owes ${payerLabel}`}</span>
-                                    </span>
-                                </div>
-                            );
-                        })}
-                        <div className="border-t border-rule pt-3.5 flex flex-col gap-2.5 text-[15px] font-bold text-body">
+                        <div className="flex flex-col gap-2.5 text-[15px] font-bold text-body">
                             <div className="flex justify-between"><span>Items</span><span>{fmt(subtotal)}</span></div>
                             {split.unassignedSubtotal > 0.004 && <div className="flex justify-between text-coral"><span>Not assigned yet</span><span>{fmt(split.unassignedSubtotal)}</span></div>}
                             <label className="flex justify-between items-center">Tax<span className="flex items-center gap-1">$<input aria-label="Tax" inputMode="decimal" value={tax} placeholder="0.00" onChange={e => setTax(e.target.value)} className={`w-20 ${cellCls}`} /></span></label>

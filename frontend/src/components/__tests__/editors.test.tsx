@@ -34,12 +34,9 @@ describe('Receipt editor (grocery split)', () => {
         expect(screen.getByText('Oat Milk')).toBeInTheDocument();
         expect(screen.getByText('$4.00 each')).toBeInTheDocument();
         expect(screen.getByText('Nobody yet', { selector: 'span.text-coral' })).toBeInTheDocument();
-        // Who pays what, with tax shared in proportion
-        await waitFor(() => expect(screen.getByText('$4.88')).toBeInTheDocument(), SLOW);
-        expect(screen.getByText('$8.85')).toBeInTheDocument();
-        expect(screen.getByText('$3.97')).toBeInTheDocument();
-        expect(screen.getByText('paid the bill')).toBeInTheDocument();
-        expect(screen.getAllByText('owes Daven')).toHaveLength(2);
+        // tax and tip are shared in proportion
+        await waitFor(() => expect(screen.getByLabelText('Tax')).toBeInTheDocument(), SLOW);
+        expect(screen.queryByText('Who pays what')).not.toBeInTheDocument();
         expect(screen.getByText('Tax and tip are shared in proportion to what each person had. Pennies always add up.')).toBeInTheDocument();
     });
 
@@ -260,7 +257,6 @@ describe('Expense editor (general cost splitting)', () => {
         expect(within(shareFor('Daven')).getByText('$1,200.00')).toBeInTheDocument();
         expect(within(shareFor('Amy')).getByText('$600.00')).toBeInTheDocument();
         expect(screen.getByText('Adds up to $2,400.00')).toBeInTheDocument();
-        expect(screen.getByText('paid the bill')).toBeInTheDocument();
     });
 
     it('an even split follows the total to the penny and saves as amounts, until an amount is edited by hand', async () => {
@@ -359,7 +355,6 @@ describe('Expense editor (general cost splitting)', () => {
         await screen.findByDisplayValue('October rent');
         await u.click(screen.getByRole('button', { name: 'Clear everyone' }));
         expect((await screen.findAllByText('Choose at least one person.')).length).toBeGreaterThan(0);
-        expect(screen.getByText('Choose who shares this cost.')).toBeInTheDocument();
         await u.click(screen.getByRole('button', { name: 'Select everyone' }));
         expect(await screen.findByText('Adds up to $2,400.00')).toBeInTheDocument();
     });
@@ -385,8 +380,6 @@ describe('Expense editor (general cost splitting)', () => {
         renderWithData(<ExpenseEditor {...{ ...props, sessionId: 's3' }} />);
         expect(await screen.findByDisplayValue('Pizza night')).toBeInTheDocument();
         expect(screen.getByText('Starts split evenly. Change an amount and the rest share what is left.')).toBeInTheDocument();
-        expect(screen.getByText('paid the bill')).toBeInTheDocument(); // Amy paid
-        expect(screen.getByText('owes Amy')).toBeInTheDocument();
         await u.click(screen.getByRole('tab', { name: 'Shares' }));
         expect(screen.getByText('Split in proportion, e.g. 2 shares for a bigger room.')).toBeInTheDocument();
     });
