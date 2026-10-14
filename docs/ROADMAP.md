@@ -63,7 +63,7 @@ stored exchange rate). Money is formatted in `lib/people.ts` (`Intl.NumberFormat
 - Spend by category and month per group, CSV/PDF export, a shareable read-only summary link. (A JSON download of your own data already exists under Account.)
 
 ### 8. Discovery
-- Search basics are in place (see the README's "Search and sharing"). The next lever is **content**: more guides that match real searches ("split utilities with roommates", "split a trip with friends", "Splitwise alternative"), each with a worked example and links back to the tool.
+- Search basics are in place (see the README's "Search and sharing"), with seven guides so far (groceries, rent, utilities, trips, couples, restaurant bills, choosing a bill-splitting app). The next lever is **more content** that matches real searches, each with a worked example and links back to the tool. Ideas: splitting a wedding or party, shared household purchases, splitting a vacation rental, who pays for gifts, and comparison pages once there are real features to compare.
 - Owner tasks: add the domain to Google Search Console and Bing Webmaster Tools, submit `sitemap.xml`, and check the social preview of the home page and a guide.
 - Later: a short public demo or screenshots on the landing page, and links from places people look (Product Hunt, relevant subreddits, the GitHub repo description).
 
