@@ -109,7 +109,7 @@ npm run build                # type-check and production build
 
 ## Search and sharing (SEO)
 - `frontend/index.html` carries the title, description, canonical link, Open Graph/Twitter tags (`public/og-image.png`, 1200x630) and JSON-LD for the app, plus plain HTML inside `#root` so a crawler that doesn't run scripts still sees the pitch and links. React replaces it on load.
-- `frontend/public/guides/` has static, crawlable guides (groceries, rent, restaurant bills) with their own titles, canonical links and `Article` data. Add a page there, add it to `public/sitemap.xml`, and link to it from the landing footer.
+- `frontend/public/guides/` has static, crawlable guides (groceries, rent, utilities, trips, couples, restaurant bills, choosing an app) with their own titles, canonical links and `Article` data. They are **generated**: edit or add a guide in `frontend/scripts/guides/` (an entry in `guides.json` plus a `<slug>.html` body), run `npm run guides` in `frontend`, and commit the files it writes under `public/` (pages, the guides index and `sitemap.xml`). A test (`guides.test.ts`) checks titles, snippets, sitemap entries and internal links.
 - `public/robots.txt` allows the site but disallows `/s/` (quick split links are private); those pages also send `X-Robots-Tag: noindex` and a `noindex` meta tag. `vercel.json` only rewrites `/s/*` to the app, so any other unknown address is a real 404 (`public/404.html`), and it adds `Referrer-Policy: strict-origin-when-cross-origin` so a quick split token never leaks to other sites.
 - The dev domain sits behind Vercel login, so it can't be crawled.
 

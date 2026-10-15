@@ -2,12 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
 		<loc>https://settled.davenc.dev/</loc>
-		<lastmod>2026-10-09</lastmod>
+		<lastmod>2026-10-14</lastmod>
 		<priority>1.0</priority>
 	</url>
 	<url>
 		<loc>https://settled.davenc.dev/guides</loc>
-		<lastmod>2026-10-09</lastmod>
+		<lastmod>2026-10-14</lastmod>
 		<priority>0.8</priority>
 	</url>
 	<url>
@@ -23,6 +23,26 @@
 	<url>
 		<loc>https://settled.davenc.dev/guides/split-a-restaurant-bill</loc>
 		<lastmod>2026-10-09</lastmod>
+		<priority>0.8</priority>
+	</url>
+	<url>
+		<loc>https://settled.davenc.dev/guides/split-utilities-with-roommates</loc>
+		<lastmod>2026-10-14</lastmod>
+		<priority>0.8</priority>
+	</url>
+	<url>
+		<loc>https://settled.davenc.dev/guides/split-costs-on-a-group-trip</loc>
+		<lastmod>2026-10-14</lastmod>
+		<priority>0.8</priority>
+	</url>
+	<url>
+		<loc>https://settled.davenc.dev/guides/split-expenses-as-a-couple</loc>
+		<lastmod>2026-10-14</lastmod>
+		<priority>0.8</priority>
+	</url>
+	<url>
+		<loc>https://settled.davenc.dev/guides/splitwise-alternatives-what-to-look-for</loc>
+		<lastmod>2026-10-14</lastmod>
 		<priority>0.8</priority>
 	</url>
 </urlset>
