@@ -34,9 +34,10 @@ describe('Receipt editor (grocery split)', () => {
         expect(screen.getByText('Oat Milk')).toBeInTheDocument();
         expect(screen.getByText('$4.00 each')).toBeInTheDocument();
         expect(screen.getByText('Nobody yet', { selector: 'span.text-coral' })).toBeInTheDocument();
-        // tax and tip are shared in proportion
-        await waitFor(() => expect(screen.getByLabelText('Tax')).toBeInTheDocument(), SLOW);
-        expect(screen.queryByText('Who pays what')).not.toBeInTheDocument();
+        // Who pays what, with tax shared in proportion
+        await waitFor(() => expect(screen.getByText('$4.88')).toBeInTheDocument(), SLOW);
+        expect(screen.getByText('$8.85')).toBeInTheDocument();
+        expect(screen.getByText('$3.97')).toBeInTheDocument();
         expect(screen.getByText('Tax and tip are shared in proportion to what each person had. Pennies always add up.')).toBeInTheDocument();
     });
 
