@@ -54,7 +54,7 @@ describe('with animation frames frozen', () => {
         fireEvent.click(costco);
         const oat = await screen.findByText('Oat Milk'); // receipt editor
         expect(effectiveOpacity(oat)).toBeGreaterThanOrEqual(MIN);
-        expect(effectiveOpacity(screen.getByLabelText('Tax'))).toBeGreaterThanOrEqual(MIN);
+        expect(effectiveOpacity(screen.getByText('Who pays what'))).toBeGreaterThanOrEqual(MIN);
 
         fireEvent.click(within(screen.getByRole('main')).getByRole('button', { name: /Roomies/ }));
         fireEvent.click(await screen.findByText('October rent'));
